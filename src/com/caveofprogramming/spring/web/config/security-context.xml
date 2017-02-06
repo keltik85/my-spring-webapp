@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
@@ -9,44 +8,67 @@
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
-				<security:user name="John" authorities="ROLE_ADMIN"
+				<security:user name="peterparker" authorities="ROLE_ADMIN"
 					password="letmein" />
-				<security:user name="Zog" authorities="ROLE_ADMIN"
+				<security:user name="maneater" authorities="ROLE_ADMIN"
 					password="iamzog" />
 			</security:user-service>
 		</security:authentication-provider>
 		<security:authentication-provider>
-			<security:jdbc-user-service data-source-ref="dataSource"
+			<security:jdbc-user-service id="myJdbcUserService"
+				data-source-ref="dataSource"
 				authorities-by-username-query='select username, role from user_roles where username =?'
 				users-by-username-query='select username, password, enabled from users where username=?' />
 		</security:authentication-provider>
 	</security:authentication-manager>
 
 	<security:http use-expressions="true">
-		<security:intercept-url pattern="/admin" access="permitAll" />
-		<!-- security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" / -->
-		<security:intercept-url pattern="/createoffer" access="isAuthenticated()" />
-		<security:intercept-url pattern="/docreate" access="isAuthenticated()" />
-		<security:intercept-url pattern="/offercreated" access="isAuthenticated()" />
-		<security:intercept-url pattern="/" access="permitAll" />
-		<security:intercept-url pattern="/loggedout" access="permitAll" />
-		<security:intercept-url pattern="/newaccount" access="permitAll" />
-		<security:intercept-url pattern="/createaccount" access="permitAll" />
-		<security:intercept-url pattern="/accountcreated" access="permitAll" />
-		<security:intercept-url pattern="/static/**" access="permitAll" />
-		<security:intercept-url pattern="/login" access="permitAll" />
-		<security:intercept-url pattern="/offers" access="permitAll" />
-		<security:intercept-url pattern="/j_spring_security_logout" access="permitAll" />
-		<security:intercept-url pattern="/j_spring_security_check" access="permitAll" />
+
+		<security:remember-me key="myOffersKey"
+			user-service-ref="myJdbcUserService" />
+
+		<security:intercept-url pattern="/admin"
+			access="permitAll" />
 		
+		<!-- security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" 
+			/ -->
+			
+		<security:intercept-url pattern="/createoffer"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/docreate"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/offercreated"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/" access="permitAll" />
+		<security:intercept-url pattern="/loggedout"
+			access="permitAll" />
+		<security:intercept-url pattern="/newaccount"
+			access="permitAll" />
+		<security:intercept-url pattern="/createaccount"
+			access="permitAll" />
+		<security:intercept-url pattern="/accountcreated"
+			access="permitAll" />
+		<security:intercept-url pattern="/static/**"
+			access="permitAll" />
+		<security:intercept-url pattern="/login"
+			access="permitAll" />
+		<security:intercept-url pattern="/offers"
+			access="permitAll" />
+		<security:intercept-url pattern="/j_spring_security_logout"
+			access="permitAll" />
+		<security:intercept-url pattern="/j_spring_security_check"
+			access="permitAll" />
+
 		<security:intercept-url pattern="/**" access="denyAll" />
 
-		
+
 		<security:form-login login-page="/login"
 			authentication-failure-url="/login?error=true" />
-			
-		<security:logout logout-success-url="/loggedout" logout-url="/j_spring_security_logout"/>
-		
+
+		<security:logout logout-success-url="/loggedout"
+			logout-url="/j_spring_security_logout" />
+
 	</security:http>
-	<security:global-method-security secured-annotations="enabled"></security:global-method-security>
+	<security:global-method-security
+		secured-annotations="enabled"></security:global-method-security>
 </beans>
