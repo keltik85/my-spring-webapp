@@ -24,7 +24,7 @@ public class User {
 	private String email;
 	
 	private boolean enabled = false;
-	private String authority;
+	private String role;
 	
 	
 	public User() {
@@ -32,12 +32,12 @@ public class User {
 	}
 
 	public User(String username, String password, String email, boolean enabled,
-			String authority) {
+			String role) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.enabled = enabled;
-		this.authority = authority;
+		this.role = role;
 	}
 
 	public String getUsername() {
@@ -65,11 +65,11 @@ public class User {
 	}
 
 	public String getAuthority() {
-		return authority;
+		return role;
 	}
 
-	public void setAuthority(String authority) {
-		this.authority = authority;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getEmail() {

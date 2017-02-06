@@ -9,16 +9,16 @@
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
-				<security:user name="John" authorities="admin"
+				<security:user name="John" authorities="ROLE_ADMIN"
 					password="letmein" />
-				<security:user name="Zog" authorities="admin"
+				<security:user name="Zog" authorities="ROLE_ADMIN"
 					password="iamzog" />
 			</security:user-service>
 		</security:authentication-provider>
 		<security:authentication-provider>
 			<security:jdbc-user-service data-source-ref="dataSource"
-				authorities-by-username-query='select * from authorities where binary username = ?'
-				users-by-username-query='select * from users where binary username = ?' />
+				authorities-by-username-query='select username, role from user_roles where username =?'
+				users-by-username-query='select username, password, enabled from users where username=?' />
 		</security:authentication-provider>
 	</security:authentication-manager>
 

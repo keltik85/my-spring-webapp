@@ -29,7 +29,7 @@ public class UsersDao {
 		
 		jdbc.update("insert into users (username, password, email, enabled) values (:username, :password, :email, :enabled)", params);
 		
-		return jdbc.update("insert into authorities (username, authority) values (:username, :authority)", params) == 1;
+		return jdbc.update("insert into user_roles (username, role) values (:username, :role)", params) == 1;
 	}
 	public boolean exists(String username) {
 		return jdbc.queryForObject("select count(*) from users where username=:username", 
@@ -37,7 +37,7 @@ public class UsersDao {
 	}
 
 	public List<User> getAllUsers() {
-		return jdbc.query("select * from users,  authorities where users.username=authorities.username", BeanPropertyRowMapper.newInstance(User.class));
+		return jdbc.query("select * from users,  user_roles where users.username=user_roles.username", BeanPropertyRowMapper.newInstance(User.class));
 	}
 	
 	
