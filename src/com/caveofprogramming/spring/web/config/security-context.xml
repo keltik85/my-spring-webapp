@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
@@ -29,10 +29,10 @@
 
 		<security:intercept-url pattern="/admin"
 			access="permitAll" />
-		
+
 		<!-- security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" 
 			/ -->
-			
+
 		<security:intercept-url pattern="/createoffer"
 			access="isAuthenticated()" />
 		<security:intercept-url pattern="/docreate"
@@ -54,19 +54,20 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/offers"
 			access="permitAll" />
-		<security:intercept-url pattern="/j_spring_security_logout"
-			access="permitAll" />
-		<security:intercept-url pattern="/j_spring_security_check"
-			access="permitAll" />
 
 		<security:intercept-url pattern="/**" access="denyAll" />
 
+		<security:access-denied-handler
+			error-page="/denied" />
 
 		<security:form-login login-page="/login"
-			authentication-failure-url="/login?error=true" />
+			authentication-failure-url="/login" username-parameter="j_username"
+			password-parameter="j_password" />
 
 		<security:logout logout-success-url="/loggedout"
 			logout-url="/j_spring_security_logout" />
+
+		<security:csrf disabled="true" />
 
 	</security:http>
 	<security:global-method-security
