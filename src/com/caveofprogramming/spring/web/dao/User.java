@@ -64,7 +64,7 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public String getAuthority() {
+	public String getRole() {
 		return role;
 	}
 

@@ -15,10 +15,13 @@
 			</security:user-service>
 		</security:authentication-provider>
 		<security:authentication-provider>
+		
 			<security:jdbc-user-service id="myJdbcUserService"
 				data-source-ref="dataSource"
 				authorities-by-username-query='select username, role from user_roles where username =?'
 				users-by-username-query='select username, password, enabled from users where username=?' />
+
+			<security:password-encoder ref="passwordEncoder"></security:password-encoder>
 		</security:authentication-provider>
 	</security:authentication-manager>
 
@@ -72,4 +75,6 @@
 	</security:http>
 	<security:global-method-security
 		secured-annotations="enabled"></security:global-method-security>
+		
+		<bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"></bean>
 </beans>
