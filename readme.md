@@ -1,5 +1,6 @@
 Configure MySql Database:
 
+```
 mysql> create database springtest;
 mysql> use springtest;
 
@@ -21,12 +22,14 @@ CREATE TABLE user_roles (
   CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users (username));
 
   
-CREATE TABLE `offers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(60) NOT NULL,
-  `text` text NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE offers (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(100) NOT NULL,
+  email varchar(60) NOT NULL,
+  text text NOT NULL,
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-INSERT INTO `offers` VALUES (1,'Bob','bob@nowhereatall.com','I will write Java for you'),(2,'Mike','mike@nowhereatall.com','Web design, very cheap'),(3,'Sue','sue@nowhereatall.com','PHP coding');
+INSERT INTO offers VALUES (1,'Bob','bob@nowhereatall.com','I will write Java for you'),(2,'Mike','mike@nowhereatall.com','Web design, very cheap'),(3,'Sue','sue@nowhereatall.com','PHP coding');
+
+```
