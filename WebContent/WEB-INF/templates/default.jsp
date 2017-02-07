@@ -14,6 +14,10 @@
 	src="${pageContext.request.contextPath}/static/script/jquery.js"></script>
 
 
+<tiles:insertAttribute name="includes">
+
+		</tiles:insertAttribute>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><tiles:insertAttribute name="title"></tiles:insertAttribute></title>
 
