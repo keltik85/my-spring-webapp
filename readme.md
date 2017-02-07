@@ -33,3 +33,12 @@ CREATE TABLE offers (
 INSERT INTO offers VALUES (1,'Bob','bob@nowhereatall.com','I will write Java for you'),(2,'Mike','mike@nowhereatall.com','Web design, very cheap'),(3,'Sue','sue@nowhereatall.com','PHP coding');
 
 ```
+
+Configure MySql Database For unit testing:
+
+```
+mysql> create database springunittesting;
+mysql> use springunittesting;
+myuser@myhostname ~/workspace/my-spring-webapp $ mysqldump -u root -proot springtest > springtest.sql
+myuser@myhostname ~/workspace/my-spring-webapp $ mysql -u root -proot springunittesting < springtest.sql
+```
