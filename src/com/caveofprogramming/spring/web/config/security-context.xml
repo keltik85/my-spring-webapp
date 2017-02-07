@@ -64,7 +64,7 @@
 			error-page="/denied" />
 
 		<security:form-login login-page="/login"
-			authentication-failure-url="/login" username-parameter="j_username"
+			authentication-failure-url="/login?failure=true" username-parameter="j_username"
 			password-parameter="j_password" />
 
 		<security:logout logout-success-url="/loggedout"
