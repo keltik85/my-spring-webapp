@@ -5,7 +5,8 @@ mysql> use springtest;
 
 CREATE  TABLE users (
   username VARCHAR(45) NOT NULL ,
-  password VARCHAR(45) NOT NULL ,
+  password VARCHAR(9999) NOT NULL ,
+  email varchar(120) NOT NULL,
   enabled TINYINT NOT NULL DEFAULT 1 ,
   PRIMARY KEY (username));
 
@@ -19,15 +20,6 @@ CREATE TABLE user_roles (
   KEY fk_username_idx (username),
   CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users (username));
 
-INSERT INTO users(username,password,enabled)
-  VALUES ('altugtekin','12345678', true);
-INSERT INTO user_roles (username, role)
-  VALUES ('altugtekin', 'ROLE_USER');
-  
-INSERT INTO users(username,password,enabled)
-  VALUES ('myadmin','12345678', true);
-INSERT INTO user_roles (username, role)
-  VALUES ('myadmin', 'ROLE_ADMIN');
   
 CREATE TABLE `offers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
