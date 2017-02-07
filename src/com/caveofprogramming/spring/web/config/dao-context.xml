@@ -8,11 +8,15 @@
 
 
 	<context:annotation-config></context:annotation-config>
-	<context:component-scan
-		base-package="com.caveofprogramming.spring.web.dao">
+	<context:component-scan base-package="com.caveofprogramming.spring.web.dao">
 	</context:component-scan>
-	
-	<jee:jndi-lookup jndi-name="jdbc/spring" id="dataSource"
-		expected-type="javax.sql.DataSource">
-	</jee:jndi-lookup>
+
+	<beans profile="production">
+		<jee:jndi-lookup jndi-name="jdbc/spring" id="dataSource"
+			expected-type="javax.sql.DataSource">
+		</jee:jndi-lookup>
+	</beans>
+
+
+
 </beans>

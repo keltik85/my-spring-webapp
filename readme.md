@@ -42,3 +42,6 @@ mysql> use springunittesting;
 myuser@myhostname ~/workspace/my-spring-webapp $ mysqldump -u root -proot springtest > springtest.sql
 myuser@myhostname ~/workspace/my-spring-webapp $ mysql -u root -proot springunittesting < springtest.sql
 ```
+
+Ressources:
+- https://tiles.apache.org/framework/tutorial/index.html
