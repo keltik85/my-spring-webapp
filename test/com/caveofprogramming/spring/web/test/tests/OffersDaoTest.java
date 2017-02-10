@@ -44,12 +44,12 @@ public class OffersDaoTest {
 	}
 
 	@Test
-	public void testCreateUser() {
+	public void testOffers() {
 		User user = new User("testcaseuser2", "John Doe 2", "heyhopassword", "asdfa@asdf.de", true, "ROLE_USER");
 		usersDao.create(user);
 
 		Offer offer = new Offer(user, "doing everything you want, if you pay enough");
-
+		
 		assertTrue("The offer is created successfully", offersDao.create(offer));
 
 		List<Offer> offerList = offersDao.getOffers();
@@ -62,5 +62,15 @@ public class OffersDaoTest {
 		offerList = offersDao.getOffers();
 
 		assertEquals("Number of Offers should be 0.", 0, offerList.size());
+		
+		User anotherUser = new User("testcaseuser3", "John Doe 3", "heyhopassword", "asdfa@asdf.de", true, "ROLE_USER");
+		usersDao.create(anotherUser);
+		for (int i = 0; i < 10; i++) {
+			Offer anotherOffer = new Offer(anotherUser, "doing the task number " + i + "for free");
+			offersDao.create(anotherOffer);
+		}
+		List<Offer> anotherOfferList = offersDao.getOffers(anotherUser.getUsername());
+		assertEquals("Number of Offers should be 10 for this one.", 10, anotherOfferList.size());
+		
 	}
 }

@@ -5,6 +5,22 @@
  <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
+<table class="offers">
+<tr><td>Name</td><td>Email</td><td>Offer</td></tr>
+
+<c:forEach var="offer" items="${offers}">
+<tr>
+
+<td><c:out value="${offer.user.name}"></c:out></td>
+
+<td><c:out value="${offer.user.email}"></c:out></td>
+
+<td><c:out value="${offer.text}"></c:out></td>
+   
+</tr>
+</c:forEach>
+</table>
+
 <p><a href="${pageContext.request.contextPath}/offers">Show current offers.</a></p>
 <p><a href="${pageContext.request.contextPath}/createoffer">Add a new offer.</a></p>
 
