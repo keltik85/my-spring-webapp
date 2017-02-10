@@ -15,7 +15,7 @@ public class Offer {
 	private User user;
 
 	public Offer() {
-
+		this.user = new User();
 	}
 
 	public Offer(User user, String text) {
@@ -93,5 +93,11 @@ public class Offer {
 	public String toString() {
 		return "Offer [id=" + id + ", text=" + text + ", user=" + user + "]";
 	}
+
+	public void setUsername(String username) {
+		this.user.setUsername(username);
+	}
+
+
 
 }

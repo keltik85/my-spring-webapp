@@ -18,8 +18,8 @@
 		
 			<security:jdbc-user-service id="myJdbcUserService"
 				data-source-ref="dataSource"
-				authorities-by-username-query='select username, role from user_roles where username =?'
-				users-by-username-query='select username, password, enabled from users where username=?' />
+				authorities-by-username-query='select username, authority from users where binary username = ?'
+				users-by-username-query='select username, password, enabled from users where username = ?' />
 
 			<security:password-encoder ref="passwordEncoder"></security:password-encoder>
 		</security:authentication-provider>

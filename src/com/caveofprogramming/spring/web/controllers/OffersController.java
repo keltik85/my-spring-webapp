@@ -1,11 +1,11 @@
 package com.caveofprogramming.spring.web.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.CleanupFailureDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -59,11 +59,15 @@ public class OffersController {
 	}
 	
 	@RequestMapping(value="/docreate", method=RequestMethod.POST)
-	public String doCreate(Model model, @Valid Offer offer, BindingResult result) {
+	public String doCreate(Model model, @Valid Offer offer, BindingResult result, Principal principal) {
 		
 		if(result.hasErrors()) {
 			return "createoffer";
 		}
+		
+		String username = principal.getName();
+		offer.setUsername(username);
+
 		
 		offersService.create(offer);
 		
