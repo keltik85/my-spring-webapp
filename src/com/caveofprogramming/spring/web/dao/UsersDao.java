@@ -17,10 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsersDao {
 
 	private NamedParameterJdbcTemplate jdbc;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	public void setDataSource(DataSource jdbc) {
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
@@ -28,25 +28,24 @@ public class UsersDao {
 
 	@Transactional
 	public boolean create(User user) {
-		
-		user.setRole("ROLE_USER");
+
+		user.setAuthority("ROLE_USER");
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(user);
-		
-		
-		jdbc.update("insert into users (username, password, email, enabled) values (:username, :password, :email, :enabled)", params);
-		
-		return jdbc.update("insert into user_roles (username, role) values (:username, :role)", params) == 1;
+
+		return jdbc.update(
+				"insert into users (username, name, password, email, enabled, authority) values (:username, :name, :password, :email, :enabled, :authority)",
+				params) == 1;
 	}
+
 	public boolean exists(String username) {
-		return jdbc.queryForObject("select count(*) from users where username=:username", 
+		return jdbc.queryForObject("select count(*) from users where username=:username",
 				new MapSqlParameterSource("username", username), Integer.class) > 0;
 	}
 
 	public List<User> getAllUsers() {
-		return jdbc.query("select * from users,  user_roles where users.username=user_roles.username", BeanPropertyRowMapper.newInstance(User.class));
+		return jdbc.query("select * from users",
+				BeanPropertyRowMapper.newInstance(User.class));
 	}
-	
-	
-	
+
 }

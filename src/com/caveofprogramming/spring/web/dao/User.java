@@ -9,15 +9,37 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.caveofprogramming.spring.web.validation.ValidEmail;
 
 public class User {
+
+	@NotBlank
+	@Size(min=8, max=15)
+	@Pattern(regexp="^\\w{8,}$")
+	private String username;
 	
+	@NotBlank
+	@Pattern(regexp="^\\S+$")
+	@Size(min=8, max=15)
+	private String password;
+	
+	@ValidEmail
+	private String email;
+	
+	private String name;
+	
+	private boolean enabled = false;
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", email=" + email + ", name=" + name + ", enabled=" + enabled + ", role="
+				+ authority + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + (enabled ? 1231 : 1237);
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((authority == null) ? 0 : authority.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -38,15 +60,15 @@ public class User {
 			return false;
 		if (enabled != other.enabled)
 			return false;
-		if (password == null) {
-			if (other.password != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!password.equals(other.password))
+		} else if (!name.equals(other.name))
 			return false;
-		if (role == null) {
-			if (other.role != null)
+		if (authority == null) {
+			if (other.authority != null)
 				return false;
-		} else if (!role.equals(other.role))
+		} else if (!authority.equals(other.authority))
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -56,34 +78,21 @@ public class User {
 		return true;
 	}
 
-	@NotBlank
-	@Size(min=8, max=15)
-	@Pattern(regexp="^\\w{8,}$")
-	private String username;
-	
-	@NotBlank
-	@Pattern(regexp="^\\S+$")
-	@Size(min=8, max=15)
-	private String password;
-	
-	@ValidEmail
-	private String email;
-	
-	private boolean enabled = false;
-	private String role;
+	private String authority;
 	
 	
 	public User() {
 		
 	}
 
-	public User(String username, String password, String email, boolean enabled,
-			String role) {
+	public User(String username, String name, String password,  String email, boolean enabled,
+			String authority) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.enabled = enabled;
-		this.role = role;
+		this.authority = authority;
+		this.name = name;
 	}
 
 	public String getUsername() {
@@ -110,12 +119,12 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public String getRole() {
-		return role;
+	public String getAuthority() {
+		return authority;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 
 	public String getEmail() {
@@ -124,6 +133,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

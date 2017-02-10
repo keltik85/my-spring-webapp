@@ -35,18 +35,20 @@ public class UserDaoTests {
 	@Before
 	public void init() {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-		jdbc.execute("delete from user_roles");
 		jdbc.execute("delete from users");
 
 	}
 
 	@Test
 	public void testCreateUser() {
-		User user = new User("testcaseuser", "heyhopassword", "asdf@asdf.de", true, "ROLE_USER");
-		List<User> userList = usersDao.getAllUsers();
+		User user = new User("testcaseuser", "John Doe","heyhopassword", "asdf@asdf.de", true, "ROLE_USER");
+	
 
 		assertTrue("User is created successfully", usersDao.create(user));
-		assertEquals("Number of Users should be 1.", userList.size(), 1);
+		
+		List<User> userList = usersDao.getAllUsers();
+		
+		assertEquals("Number of Users should be 1.", 1, userList.size());
 		assertTrue("The user should exist.", usersDao.exists(user.getUsername()));
 		assertEquals("Created user should be identical to retrieved user.", user, userList.get(0));
 	}

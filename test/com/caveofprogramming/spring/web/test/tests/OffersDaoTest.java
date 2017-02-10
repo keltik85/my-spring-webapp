@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.caveofprogramming.spring.web.dao.Offer;
 import com.caveofprogramming.spring.web.dao.OffersDao;
 import com.caveofprogramming.spring.web.dao.User;
+import com.caveofprogramming.spring.web.dao.UsersDao;
 
 @ActiveProfiles("dev")
 @ContextConfiguration(locations = { "classpath:com/caveofprogramming/spring/web/config/dao-context.xml",
@@ -30,31 +31,36 @@ public class OffersDaoTest {
 	private OffersDao offersDao;
 
 	@Autowired
+	private UsersDao usersDao;
+
+	@Autowired
 	private DataSource dataSource;
 
 	@Before
 	public void init() {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-		jdbc.execute("delete from user_roles");
-		jdbc.execute("delete from users");
 		jdbc.execute("delete from offers");
+		jdbc.execute("delete from users");
 	}
 
 	@Test
 	public void testCreateUser() {
-		Offer offer = new Offer("testcaseuser2", "asdf@asdf.de", "doing everything you want, if you pay enough");
+		User user = new User("testcaseuser2", "John Doe 2", "heyhopassword", "asdfa@asdf.de", true, "ROLE_USER");
+		usersDao.create(user);
 
-
+		Offer offer = new Offer(user, "doing everything you want, if you pay enough");
 
 		assertTrue("The offer is created successfully", offersDao.create(offer));
-		
+
 		List<Offer> offerList = offersDao.getOffers();
-		assertEquals("Number of Offers should be 1.",  1, offerList.size());
+		assertEquals("Number of Offers should be 1.", 1, offerList.size());
 		assertEquals("Created user should be identical to retrieved user.", offer, offerList.get(0));
-		
+
+		assertEquals("The offer is retrieved successfully", offer, offersDao.getOffer(offerList.get(0).getId()));
+
 		offersDao.delete(offerList.get(0).getId());
 		offerList = offersDao.getOffers();
-		
+
 		assertEquals("Number of Offers should be 0.", 0, offerList.size());
 	}
 }
