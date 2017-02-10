@@ -16,18 +16,18 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.caveofprogramming.spring.web.dao.Offer;
+import com.caveofprogramming.spring.web.dao.OffersDao;
 import com.caveofprogramming.spring.web.dao.User;
-import com.caveofprogramming.spring.web.dao.UsersDao;
 
 @ActiveProfiles("dev")
 @ContextConfiguration(locations = { "classpath:com/caveofprogramming/spring/web/config/dao-context.xml",
 		"classpath:com/caveofprogramming/spring/web/config/security-context.xml",
 		"classpath:com/caveofprogramming/spring/web/test/config/datasource.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class UserDaoTests {
-
+public class OffersDaoTest {
 	@Autowired
-	private UsersDao usersDao;
+	private OffersDao offersDao;
 
 	@Autowired
 	private DataSource dataSource;
@@ -37,17 +37,24 @@ public class UserDaoTests {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		jdbc.execute("delete from user_roles");
 		jdbc.execute("delete from users");
-
+		jdbc.execute("delete from offers");
 	}
 
 	@Test
 	public void testCreateUser() {
-		User user = new User("testcaseuser", "heyhopassword", "asdf@asdf.de", true, "ROLE_USER");
-		List<User> userList = usersDao.getAllUsers();
+		Offer offer = new Offer("testcaseuser2", "asdf@asdf.de", "doing everything you want, if you pay enough");
 
-		assertTrue("User is created successfully", usersDao.create(user));
-		assertEquals("Number of Users should be 1.", userList.size(), 1);
-		assertTrue("The user should exist.", usersDao.exists(user.getUsername()));
-		assertEquals("Created user should be identical to retrieved user.", user, userList.get(0));
+
+
+		assertTrue("The offer is created successfully", offersDao.create(offer));
+		
+		List<Offer> offerList = offersDao.getOffers();
+		assertEquals("Number of Offers should be 1.",  1, offerList.size());
+		assertEquals("Created user should be identical to retrieved user.", offer, offerList.get(0));
+		
+		offersDao.delete(offerList.get(0).getId());
+		offerList = offersDao.getOffers();
+		
+		assertEquals("Number of Offers should be 0.", 0, offerList.size());
 	}
 }
