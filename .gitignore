@@ -1,4 +1,6 @@
 .springbeans/*
+.springBeans
+WebContent/META-INF/MANIFEST.MF
 target/
 .project
 .classpath

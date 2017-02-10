@@ -1,6 +1,9 @@
 package com.caveofprogramming.spring.web.test.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -9,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -39,9 +41,12 @@ public class UserDaoTests {
 	}
 
 	@Test
-	public void testCreateUSer() {
+	public void testCreateUser() {
 		User user = new User("testcaseuser","heyhopassword","asdf@asdf.de", true, "ROLE_USER");
-		
 		assertTrue("User is created successfully", usersDao.create(user));
+		
+		List<User> userList = usersDao.getAllUsers();
+		
+		assertEquals(userList.size(), 1);
 	}
 }
