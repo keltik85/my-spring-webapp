@@ -15,62 +15,73 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.caveofprogramming.spring.web.dao.Offer;
 import com.caveofprogramming.spring.web.service.OffersService;
+import com.caveofprogramming.spring.web.test.tests.OffersDaoTest;
 
 @Controller
 public class OffersController {
-	
+
 	private OffersService offersService;
-	
+
 	@Autowired
 	public void setOffersService(OffersService offersService) {
 		this.offersService = offersService;
 	}
-	
-	@RequestMapping(value="/test", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String showTest(Model model, @RequestParam("id") String id) {
 		System.out.println("Id is: " + id);
 		return "home";
 	}
-	
+
 	/*
-	@ExceptionHandler(DataAccessException.class)
-	public String handleDatabaseException(DataAccessException ex) {
-		return "error";
-	*/
+	 * @ExceptionHandler(DataAccessException.class) public String
+	 * handleDatabaseException(DataAccessException ex) { return "error";
+	 */
 
 	@RequestMapping("/offers")
 	public String showOffers(Model model) {
-				
-		//throw new CleanupFailureDataAccessException(null, null);
-		
+
+		// throw new CleanupFailureDataAccessException(null, null);
+
 		List<Offer> offers = offersService.getCurrent();
-		
+
 		model.addAttribute("offers", offers);
-		
+
 		return "offers";
 	}
-	
+
 	@RequestMapping("/createoffer")
-	public String createOffer(Model model) {
-	
-		model.addAttribute("offer", new Offer());
+	public String createOffer(Model model, Principal principal) {
 		
-		return "createoffer";
-	}
-	
-	@RequestMapping(value="/docreate", method=RequestMethod.POST)
-	public String doCreate(Model model, @Valid Offer offer, BindingResult result, Principal principal) {
-		
-		if(result.hasErrors()) {
-			return "createoffer";
+		Offer offer = null;
+
+		if (principal != null) {
+			String username = principal.getName();
+
+			offer = offersService.getOffer(username);
 		}
 		
+		if(offer == null){
+			offer = new Offer();
+		}
+
+		model.addAttribute("offer", offer);
+
+		return "createoffer";
+	}
+
+	@RequestMapping(value = "/docreate", method = RequestMethod.POST)
+	public String doCreate(Model model, @Valid Offer offer, BindingResult result, Principal principal) {
+
+		if (result.hasErrors()) {
+			return "createoffer";
+		}
+
 		String username = principal.getName();
 		offer.setUsername(username);
 
-		
-		offersService.create(offer);
-		
+		offersService.saveOrUpdate(offer);
+
 		return "offercreated";
 	}
 }
