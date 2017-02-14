@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OffersDao {
 
 	private NamedParameterJdbcTemplate jdbc;
+	
 
 	@Autowired
 	public void setDataSource(DataSource jdbc) {

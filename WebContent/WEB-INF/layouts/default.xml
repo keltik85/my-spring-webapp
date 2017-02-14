@@ -24,43 +24,49 @@
 		<put-attribute name="title" value="Offers Homepage"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/login.jsp"></put-attribute>
 	</definition>
-	
+
 	<definition name="newaccount" extends="offers.base">
 		<put-attribute name="title" value="Create Account"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/newaccount.jsp"></put-attribute>
-		<put-attribute name="includes" value="/WEB-INF/tiles/newaccountscript.jsp"></put-attribute>
+		<put-attribute name="includes"
+			value="/WEB-INF/tiles/newaccountscript.jsp"></put-attribute>
 	</definition>
-	
+
 	<definition name="createoffer" extends="offers.base">
 		<put-attribute name="title" value="Create Offer"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/createoffer.jsp"></put-attribute>
 	</definition>
-	
+
 	<definition name="loggedout" extends="offers.base">
 		<put-attribute name="title" value="Offers Homepage"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/loggedout.jsp"></put-attribute>
 	</definition>
-	
+
 	<definition name="denied" extends="offers.base">
 		<put-attribute name="title" value="Offers Homepage"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/denied.jsp"></put-attribute>
 	</definition>
-	
+
 	<definition name="offercreated" extends="offers.base">
 		<put-attribute name="title" value="Offers Homepage"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/offercreated.jsp"></put-attribute>
 	</definition>
-	
+
+	<definition name="offerdeleted" extends="offers.base">
+		<put-attribute name="title" value="Offers Homepage"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/offerdeleted.jsp"></put-attribute>
+	</definition>
+
 	<definition name="admin" extends="offers.base">
 		<put-attribute name="title" value="Offers Homepage"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/admin.jsp"></put-attribute>
 	</definition>
-	
+
 	<definition name="accountcreated" extends="offers.base">
 		<put-attribute name="title" value="Offers Homepage"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/accountcreated.jsp"></put-attribute>
 	</definition>
-	
+
 	<definition name="error" extends="offers.base">
 		<put-attribute name="title" value="Offers Homepage"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/error.jsp"></put-attribute>

@@ -15,7 +15,7 @@
 			</security:user-service>
 		</security:authentication-provider>
 		<security:authentication-provider>
-		
+
 			<security:jdbc-user-service id="myJdbcUserService"
 				data-source-ref="dataSource"
 				authorities-by-username-query='select username, authority from users where binary username = ?'
@@ -41,6 +41,8 @@
 		<security:intercept-url pattern="/docreate"
 			access="isAuthenticated()" />
 		<security:intercept-url pattern="/offercreated"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/offerdeleted"
 			access="isAuthenticated()" />
 		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/loggedout"
@@ -75,6 +77,7 @@
 	</security:http>
 	<security:global-method-security
 		secured-annotations="enabled"></security:global-method-security>
-		
-		<bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"></bean>
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.password.StandardPasswordEncoder"></bean>
 </beans>
