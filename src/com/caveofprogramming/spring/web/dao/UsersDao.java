@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Transactional
 @Component("usersDao")
 public class UsersDao {
@@ -38,15 +37,22 @@ public class UsersDao {
 	}
 
 	@Transactional
-	public boolean create(User user) {
+	public void create(User user) {
 
-		user.setAuthority("ROLE_USER");
+		// user.setAuthority("ROLE_USER");
+		// user.setPassword(passwordEncoder.encode(user.getPassword()));
+		// BeanPropertySqlParameterSource params = new
+		// BeanPropertySqlParameterSource(user);
+		//
+		// return jdbc.update(
+		// "insert into users (username, name, password, email, enabled,
+		// authority) values (:username, :name, :password, :email, :enabled,
+		// :authority)",
+		// params) == 1;
+		
+		
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(user);
-
-		return jdbc.update(
-				"insert into users (username, name, password, email, enabled, authority) values (:username, :name, :password, :email, :enabled, :authority)",
-				params) == 1;
+		this.getSession().save(user);
 	}
 
 	public boolean exists(String username) {
