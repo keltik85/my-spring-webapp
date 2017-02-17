@@ -1,6 +1,7 @@
 package com.caveofprogramming.spring.web.test.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -60,6 +61,16 @@ public class UserDaoTests {
 		assertEquals("Four users have been created and four users are also recieved!", 4, users2.size() );
 		
 	}
+	
+	@Test
+	public void testExists(){
+		usersDao.create(user1);
+		usersDao.create(user2);
+		usersDao.create(user3);
+
+		assertTrue("The user should exist.", usersDao.exists(user2.getUsername()));
+		assertFalse("The user should not exist.", usersDao.exists("Ronald McDonald"));
+	}
 
 	//TODO - Remimplement this
 	@Test
@@ -73,6 +84,7 @@ public class UserDaoTests {
 
 		assertEquals("Number of Users should be 1.", 1, userList.size());
 		assertTrue("The user should exist.", usersDao.exists(user.getUsername()));
+		assertFalse("The user should not exist.", usersDao.exists("Ronald McDonald"));
 		assertEquals("Created user should be identical to retrieved user.", user, userList.get(0));
 	}
 }
