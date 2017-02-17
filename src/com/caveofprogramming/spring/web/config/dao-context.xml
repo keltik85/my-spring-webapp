@@ -2,7 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+	xmlns:webflow-config="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.4.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
@@ -45,8 +47,13 @@
 		</bean>
 		<tx:annotation-driven />
 
-<!-- 		<bean id="exceptionTranslator" -->
-<!-- 			class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"></bean> -->
+		<webflow-config:flow-registry id="flowRegistry"
+			base-path="/WEB-INF/flows">
+			<webflow-config:flow-location id="message" path="contact-flow.xml"></webflow-config:flow-location>
+		</webflow-config:flow-registry>
+
+		<!-- <bean id="exceptionTranslator" -->
+		<!-- class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"></bean> -->
 	</beans>
 
 
