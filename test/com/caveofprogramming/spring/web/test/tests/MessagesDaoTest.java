@@ -1,11 +1,5 @@
 package com.caveofprogramming.spring.web.test.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import javax.sql.DataSource;
 
 import org.junit.Before;
@@ -17,6 +11,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.caveofprogramming.spring.web.dao.Message;
+import com.caveofprogramming.spring.web.dao.MessagesDao;
+import com.caveofprogramming.spring.web.dao.OffersDao;
 import com.caveofprogramming.spring.web.dao.User;
 import com.caveofprogramming.spring.web.dao.UsersDao;
 
@@ -25,10 +22,15 @@ import com.caveofprogramming.spring.web.dao.UsersDao;
 		"classpath:com/caveofprogramming/spring/web/config/security-context.xml",
 		"classpath:com/caveofprogramming/spring/web/test/config/datasource.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class UserDaoTests {
+public class MessagesDaoTest {
+	@Autowired
+	private OffersDao offersDao;
 
 	@Autowired
 	private UsersDao usersDao;
+
+	@Autowired
+	private MessagesDao messagesDao;
 
 	@Autowired
 	private DataSource dataSource;
@@ -44,48 +46,18 @@ public class UserDaoTests {
 		jdbc.execute("delete from offers");
 		jdbc.execute("delete from messages");
 		jdbc.execute("delete from users");
-
 	}
-	
+
 	@Test
-	public void testCreateRecieve(){
+	public void testSave() {
 		usersDao.create(user1);
-		List<User> users1 = usersDao.getAllUsers();
-		assertEquals("One user was created and one user is also recieved!", 1, users1.size() );
-		assertEquals("Inserted user is the same as the object!", user1, users1.get(0));
-		
 		usersDao.create(user2);
 		usersDao.create(user3);
 		usersDao.create(user4);
+
+		Message message1 = new Message("Some Test Subject 1", "Some Test content 1", "Peter Parker",
+				"peterparker@spiderman.net", user1.getUsername());
 		
-		List<User> users2 = usersDao.getAllUsers();
-		assertEquals("Four users have been created and four users are also recieved!", 4, users2.size() );
-		
-	}
-	
-	@Test
-	public void testExists(){
-		usersDao.create(user1);
-		usersDao.create(user2);
-		usersDao.create(user3);
-
-		assertTrue("The user should exist.", usersDao.exists(user2.getUsername()));
-		assertFalse("The user should not exist.", usersDao.exists("Ronald McDonald"));
-	}
-
-	//TODO - Remimplement this
-	@Test
-	public void testCreateUser() {
-		User user = new User("testcaseuser", "John Doe", "heyhopassword", "asdf@asdf.de", true, "ROLE_USER");
-
-		// assertTrue("User is created successfully", usersDao.create(user));
-		usersDao.create(user);
-
-		List<User> userList = usersDao.getAllUsers();
-
-		assertEquals("Number of Users should be 1.", 1, userList.size());
-		assertTrue("The user should exist.", usersDao.exists(user.getUsername()));
-		assertFalse("The user should not exist.", usersDao.exists("Ronald McDonald"));
-		assertEquals("Created user should be identical to retrieved user.", user, userList.get(0));
+		messagesDao.saveOrUpdate(message1);
 	}
 }
