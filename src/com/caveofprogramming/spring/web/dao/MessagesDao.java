@@ -42,6 +42,7 @@ public class MessagesDao {
 	}
 	
 	public void saveOrUpdate(Message message) {
+		System.out.println("Displaying the message: " + message);
 		this.getSession().saveOrUpdate(message);
 	}
 	

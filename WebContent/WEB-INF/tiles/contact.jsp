@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
 	pageEncoding="US-ASCII"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-<h2>Send Message</h2>
+<h2>Send Message </h2>
 
 <sf:form method="post" commandName="message">
 
 	<input type="hidden" name="flowExecutionKey"
 		value="${flowExecutionKey}" />
+
+	<input type="hidden" name="_eventId" value="mySendEventId" />
+	<input type="hidden" name="username" value="asdfasd" />
 
 	<table class="formtable">
 		<tr>
@@ -44,7 +47,8 @@
 		</tr>
 		<tr>
 			<td class="label"></td>
-			<td><input class="control" value="Create account" type="submit" /></td>
+			<td><input class="control" value="Send this message"
+				type="submit" /></td>
 		</tr>
 	</table>
 
