@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import com.caveofprogramming.spring.web.validation.ValidEmail;
 
 @Entity
 @Table(name = "messages")
@@ -92,8 +95,8 @@ public class Message implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", subject=" + subject + ", content=" + content + ", name=" + name + ", email="
-				+ email + ", username=" + username + "]";
+		return "Message [id=" + id + ", subject=" + subject + ", content=" + content + ", name(from)=" + name + ", email="
+				+ email + ", username (to)=" + username + "]";
 	}
 
 	public void setContent(String content) {
@@ -124,24 +127,25 @@ public class Message implements Serializable {
 		this.username = username;
 	}
 
+	@Size(min=8, max=60)
 	private String subject;
+	
+	@Size(min=8, max=1000)
 	private String content;
 
-	// name of user sending message
+	// from user
+	@Size(min=8, max=50)
 	private String name;
 
-	// senders email
+	// from email
+	@ValidEmail
 	private String email;
 
-	// sending Message to this user
+	// to user
 	private String username;
 
 	public Message() {
-//		this.subject = "Subject goes here";
-//		this.content = "content goes here";
-//		this.name = "name goes here";
-//		this.email = "email goes here";
-//		this.username = "username goes here";
+
 	}
 
 	public Message(String subject, String content, String name, String email, String username) {

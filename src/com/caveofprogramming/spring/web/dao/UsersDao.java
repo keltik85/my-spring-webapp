@@ -50,21 +50,17 @@ public class UsersDao {
 		// authority) values (:username, :name, :password, :email, :enabled,
 		// :authority)",
 		// params) == 1;
-		
-		
+
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		this.getSession().save(user);
 	}
 
 	public boolean exists(String username) {
-//		return jdbc.queryForObject("select count(*) from users where username=:username",
-//		new MapSqlParameterSource("username", username), Integer.class) > 0;
-		
-		Criteria crit = this.getSession().createCriteria(User.class);
-		crit.add(Restrictions.idEq(username));
-		
-		User user = (User) crit.uniqueResult();
-		return user != null;
+		// return jdbc.queryForObject("select count(*) from users where
+		// username=:username",
+		// new MapSqlParameterSource("username", username), Integer.class) > 0;
+
+		return this.getUser(username) != null;
 
 	}
 
@@ -74,6 +70,13 @@ public class UsersDao {
 		// BeanPropertyRowMapper.newInstance(User.class));
 
 		return this.getSession().createQuery("from User").getResultList();
+	}
+
+	public User getUser(String username) {
+		Criteria crit = this.getSession().createCriteria(User.class);
+		crit.add(Restrictions.idEq(username));
+		User user = (User) crit.uniqueResult();
+		return user;
 	}
 
 }

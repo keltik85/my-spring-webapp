@@ -62,8 +62,12 @@
 	</bean>
 
 	<webflow-config:flow-builder-services
-		id="flowBuilderServices" view-factory-creator="mvcViewFactoryCreator" />
+		id="flowBuilderServices" view-factory-creator="mvcViewFactoryCreator"
+		validator="myWebflowValidator" />
 
+	<bean id="myWebflowValidator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"></bean>
+		
 	<bean id="mvcViewFactoryCreator"
 		class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
 		<property name="viewResolvers" ref="tilesViewResolver"></property>

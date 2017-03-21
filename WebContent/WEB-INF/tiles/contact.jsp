@@ -3,7 +3,17 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h2>Send Message </h2>
+<p>Raw Request data: ${rawRequestData}</p>
+
+
+<p>Send message to: ${message.username}</p>
+
+
+<p>from User Raw Data: ${fromUserRawData} </p>
+
+<p>${fromUser}</p>
+
+<h2>Send Message</h2>
 
 <sf:form method="post" commandName="message">
 
@@ -11,12 +21,12 @@
 		value="${flowExecutionKey}" />
 
 	<input type="hidden" name="_eventId" value="mySendEventId" />
-	<input type="hidden" name="username" value="asdfasd" />
 
 	<table class="formtable">
 		<tr>
 			<td class="label">Your Name:</td>
-			<td><sf:input class="control" path="name" type="text" /><br />
+			<td><sf:input class="control" path="name" type="text"
+					value="${fromUser.name}" /><br />
 				<div class="error">
 					<sf:errors path="name"></sf:errors>
 				</div></td>
@@ -24,7 +34,8 @@
 
 		<tr>
 			<td class="label">Your EMail:</td>
-			<td><sf:input class="control" path="email" type="text" /><br />
+			<td><sf:input class="control" path="email" type="text"
+					value="${fromEmail}" /><br />
 				<div class="error">
 					<sf:errors path="email"></sf:errors>
 				</div></td>
